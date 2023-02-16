@@ -20,24 +20,22 @@ pagHTML = '''
     <h1>Mapa Virtual</h1>
     <table>
         <tr>
-            <!--Coluna do índice-->
             <td>
                 <h3>Índice</h3>
                 <ol>
 '''
 
 for c in cidades:
-    pagHTML += f'<li><a href="#{c["id"]}">{c["nome"]}</a></li>'
+    pagHTML += f'<li><a href="#{c["id"]}">{c["nome"]}</a></li>\n'
 
 pagHTML += '''
 </ol>
             </td>
-            <!--Coluna do conteúdo-->
             <td>
                 <h3>Nome da cidade</h3>
                 <p><b>Distrito:</b> distrito</p>
                 <p><b>População</b> população</p>
-                p><b>Descrição</b> descrição</p>
+                <p><b>Descrição</b> descrição</p>
                 <center>
                     <hr width="80%">
                 </center>
@@ -48,4 +46,7 @@ pagHTML += '''
 </html>
 '''
 
-print(pagHTML)
+# print(pagHTML)
+file = open('test.html', 'w')
+file.write(pagHTML)
+file.close()
