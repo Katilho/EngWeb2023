@@ -11,4 +11,4 @@ for p in mapa["pessoas"]:
     idt += 1
 
 with open("dataset-result.json", "w") as f:
-    json.dump(mapa, f)
+    json.dump(mapa, f, indent=2, ensure_ascii=False)
