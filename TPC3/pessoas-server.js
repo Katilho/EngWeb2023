@@ -10,26 +10,26 @@ http.createServer(function (req,res){
     var d = new Date().toISOString().substring(0,16)
     console.log(req.method + " " + req.url + " " + d)
 
-    var parsedURL = url.parse(req.url, true);
+    var parsedURL = url.parse(req.url, true)
     
     if(req.url == '/'){
         res.writeHead(200,{'Content-Type': 'text/html; charset=utf-8'});
-        res.end(mypages.genHomePage(d)) // talvez pudesse ir buscar isto a um ficheiro.
+        res.end(mypages.genHomePage(d)) 
     }
 
     else if(req.url == '/pessoas'){
-        axios.get('http://localhost:3000/pessoas?_sort=nome&_order=asc') // demonstra a lista por ordem.
+        axios.get('http://localhost:3000/pessoas') // demonstra a lista por ordem.
         .then(function(resp){
             var pessoas = resp.data
             console.log("Recuperei " + pessoas.length + " registos")
 
-            res.writeHead(200,{'Content-Type': 'text/html; charset=utf-8'});
+            res.writeHead(200,{'Content-Type': 'text/html; charset=utf-8'})
             res.end(mypages.genMainPage(pessoas, d))
         })
         .catch(erro => {   // É UMA FUNÇÃO ANÓNIMA. A MESMA COISA DO QUE function(erro){}
             console.log("Erro: " + erro)
 
-            res.writeHead(200,{'Content-Type': 'text/html; charset=utf-8'});
+            res.writeHead(200,{'Content-Type': 'text/html; charset=utf-8'})
             res.end("<p>Erro: " + erro + "</p>")
         })
     }
@@ -52,12 +52,13 @@ http.createServer(function (req,res){
             res.end("<p>Erro: " + erro + "</p>")
         })
     }
-    else if(req.url == '/ordDesc'){
+    else if(req.url == '/ordAsc'){
+        //  axios.get('http://localhost:3000/pessoas?_sort=nome&_order=asc') // demonstra a lista por ordem.
         axios.get('http://localhost:3000/pessoas')
         .then(function(resp){
             var pessoas = resp.data
             let pessoasOrdenadas = pessoas.sort(
-                (p1,p2) => (p1.nome < p2.nome) ? 1 : -1
+                (p1,p2) => (p1.nome < p2.nome)? -1 : 1
             )
 
             res.writeHead(200,{'Content-Type': 'text/html; charset=utf-8'});
@@ -96,7 +97,6 @@ http.createServer(function (req,res){
             
             var pessoasSexo = []
             for (let p of pessoas){
-                // console.log(p.sexo)
                 if (p.sexo == sexo){
                     pessoasSexo.push(p)
                 }

@@ -21,7 +21,7 @@ exports.genHomePage = function(data){
                         <a href="http://localhost:7777/pessoas">
                             <li>Lista de pessoas</li>
                         </a>
-                        <a href="http://localhost:7777/ordDesc">
+                        <a href="http://localhost:7777/ordAsc">
                             <li>Lista de pessoas ordenada</li>
                         </a>
                         <a href="http://localhost:7777/pessoas/distrSexo">
