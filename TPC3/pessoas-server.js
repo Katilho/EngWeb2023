@@ -2,12 +2,15 @@ const http = require('http');
 const axios = require('axios');
 const mypages = require('./mypages')
 const fs = require('fs');
+const url = require('url');
 
 const porta = 7777
 
 http.createServer(function (req,res){
     var d = new Date().toISOString().substring(0,16)
     console.log(req.method + " " + req.url + " " + d)
+
+    var parsedURL = url.parse(req.url, true);
     
     if(req.url == '/'){
         res.writeHead(200,{'Content-Type': 'text/html; charset=utf-8'});
@@ -92,8 +95,8 @@ http.createServer(function (req,res){
             var sexo = decodeURI(req.url.substring(14))
             
             var pessoasSexo = []
-            for (p of pessoas){
-                console.log(p.sexo)
+            for (let p of pessoas){
+                // console.log(p.sexo)
                 if (p.sexo == sexo){
                     pessoasSexo.push(p)
                 }
@@ -114,7 +117,7 @@ http.createServer(function (req,res){
         axios.get('http://localhost:3000/pessoas')
         .then(function(resp){
             var pessoas = resp.data
-            console.log("A recuperar registo de pessoas com " + pessoas.length + " nomes para distrDesporto.")
+            console.log("A recuperar registo de pessoas com " + pessoas.length + " registos para distrDesporto.")
 
             res.writeHead(200,{'Content-Type': 'text/html; charset=utf-8'});
             res.end(mypages.genDistrDesporto(pessoas, d))
@@ -127,24 +130,88 @@ http.createServer(function (req,res){
         })
     }
 
-    else if(req.url.match(/\/pessoas\/desporto=\w+/)){ /// COPY-PASTE -- PARA ALTERAR TUDO
+    else if(req.url.match(/\/pessoas\/desporto=\w+/)){
         axios.get('http://localhost:3000/pessoas')
         .then(function(resp){
-            var pessoas = resp.data
-            var sexo = decodeURI(req.url.substring(14))
+            let pessoas = resp.data
+            let desporto = decodeURI(req.url.substring(18))
             
-            var pessoasSexo = []
-            for (p of pessoas){
-                console.log(p.sexo)
-                if (p.sexo == sexo){
-                    pessoasSexo.push(p)
+            let praticantes = []
+            for (let p of pessoas){
+                // console.log(p.desportos)
+                if (p.desportos.includes(desporto)){
+                    praticantes.push(p)
                 }
             }
 
             res.writeHead(200,{'Content-Type': 'text/html; charset=utf-8'});
-            res.end(mypages.genMainPage(pessoasSexo, d, `Lista de pessoas do sexo ${sexo}`))
+            res.end(mypages.genMainPage(praticantes, d, `Lista de pessoas que praticam ${desporto}`))
         })
-        .catch(erro => {   // É UMA FUNÇÃO. A MESMA COISA DO QUE function(erro){}
+        .catch(erro => {
+            console.log("Erro: " + erro)
+
+            res.writeHead(200,{'Content-Type': 'text/html; charset=utf-8'});
+            res.end("<p>Erro: " + erro + "</p>")
+        })
+    }
+
+    // PROFISSOES
+    else if(parsedURL.pathname == "/pessoas/profissoes"){
+        axios.get('http://localhost:3000/pessoas')
+        .then(function(resp){
+            var pessoas = resp.data
+            
+            var profissoes = {}
+            for(let p of pessoas){
+                let prof = p.profissao
+                if(prof in profissoes){
+                    profissoes[prof] += 1
+                }
+                else{
+                    profissoes[prof] = 1
+                }
+            }
+            
+            if("top" in parsedURL.query){
+                var top = parseInt(parsedURL.query.top)
+                if (top == NaN){
+                    console.log("Tentativa de obter top profissoes sem um inteiro!")
+                }
+                else{
+                    profissoes = Object.fromEntries(
+                        // Object.entries(profissoes).sort(([,a], [,b]) => b - a).slice(0,top)
+                        Object.entries(profissoes).sort((a, b) => b[1] - a[1]).slice(0,top)
+                    )
+                }
+            }
+            
+            res.writeHead(200,{'Content-Type': 'text/html; charset=utf-8'});
+            res.end(mypages.genProfissaoPage(profissoes, top, d))
+        })
+        .catch(erro => {
+            console.log("Erro: " + erro)
+
+            res.writeHead(200,{'Content-Type': 'text/html; charset=utf-8'});
+            res.end("<p>Erro: " + erro + "</p>")
+        })
+    }
+    else if(req.url.match(/\/pessoas\/profissao=\w+/)){
+        axios.get('http://localhost:3000/pessoas')
+        .then(function(resp){
+            var pessoas = resp.data            
+            var profissao = decodeURI(req.url.substring(19))
+            
+            var profissoes = []
+            for(let p of pessoas){
+                if(p.profissao.includes(profissao)){
+                    profissoes.push(p)
+                }
+            }
+
+            res.writeHead(200,{'Content-Type': 'text/html; charset=utf-8'});
+            res.end(mypages.genMainPage(profissoes, d, `Lista de pessoas com a profissão de ${profissao}`))
+        })
+        .catch(erro => {
             console.log("Erro: " + erro)
 
             res.writeHead(200,{'Content-Type': 'text/html; charset=utf-8'});
