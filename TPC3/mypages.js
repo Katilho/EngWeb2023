@@ -60,6 +60,7 @@ exports.genMainPage = function(lista, data, title = "Lista de Pessoas na Base de
         <body>
             <div class="w3-card-4">
                 <header class="w3-container w3-deep-purple">
+                    <a href="http://localhost:7777" class="w3-button">Home</a>
                     <h1>${title} (${lista.length})</h1>
                 </header>
 
@@ -119,8 +120,8 @@ exports.genPessoaPage = function(pessoa, data){
         <body>
             <div class="w3-card-4">
                 <header class="w3-container w3-deep-purple">
+                <a href="http://localhost:7777" class="w3-button">Home</a>
                     <h1>${pessoa.nome}</h1>
-                    <a href="http://localhost:7777" class="w3-button">Home</a>
                 </header>
                 <div class="w3-container">
                     <ul class="w3-ul w3-border w3-dark-grey">`
@@ -191,6 +192,7 @@ exports.genDistrSexo = function(lista, data){
     <body>
         <div class="w3-card-4">
             <header class="w3-container w3-deep-purple">
+                <a href="http://localhost:7777" class="w3-button">Home</a>
                 <h1>Distribuição por sexo</h1>
             </header>
 
@@ -258,6 +260,7 @@ exports.genDistrDesporto = function(lista, data){
     <body>
         <div class="w3-card-4">
             <header class="w3-container w3-deep-purple">
+                <a href="http://localhost:7777" class="w3-button">Home</a>
                 <h1>Distribuição por desporto</h1>
             </header>
 
@@ -300,6 +303,7 @@ exports.genProfissaoPage = function(topProfissao, top, data){
     <body>
         <div class="w3-card-4">
             <header class="w3-container w3-deep-purple">
+                <a href="http://localhost:7777" class="w3-button">Home</a>
                 <h1>Top ${top} de profissões</h1>
             </header>
 
