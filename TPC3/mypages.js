@@ -141,10 +141,10 @@ exports.genPessoaPage = function(pessoa, data){
                     <li>${value[keyi]}</li>
                     </a>`
                 }
-                else if( key != "atributos" && key != "partido_politico") { // talvez desse pra ter isto melhor feito, se distinguisse objeto de array.
+                //else if( key != "atributos" && key != "partido_politico") { // talvez desse pra ter isto melhor feito, se distinguisse objeto de array.
+                else if (value instanceof Array) {
                     pagHTML += `
                     <li>${value[keyi]}</li>`
-
                 }
                 else{
                     pagHTML += `
