@@ -21,17 +21,20 @@
     {
       "id": "t1",
       "user": "u2",
-      "task": "cenaseditado"
+      "task": "cenaseditado",
+      "done": "1"
     },
     {
       "id": "t2",
       "user": "u2",
-      "task": "cenas2dup3"
+      "task": "cenas2dup3",
+      "done": "1"
     },
     {
       "id": "t5",
       "user": "u1",
-      "task": "ref"
+      "task": "ref",
+      "done": "1"
     },
     {
       "id": "t6",
@@ -55,6 +58,11 @@
       "user": "u4",
       "task": "task123",
       "done": "1"
+    },
+    {
+      "user": "u4",
+      "task": "cenas da jamaica",
+      "id": "d_605RQ"
     }
   ]
 }

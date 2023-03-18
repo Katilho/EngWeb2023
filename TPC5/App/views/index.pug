@@ -10,8 +10,8 @@ block content
         form.w3-container(method="post")
           fieldset.w3-light-grey
             legend.w3-xlarge Adicionar nova tarefa
-            label Id
-            input.w3-input.w3-round.w3-grey(type="text" name="id")
+            //- label Id
+            //- input.w3-input.w3-round.w3-grey(type="text" name="id")
             label User
             select.w3-select.w3-round.w3-grey(name="user")
               each u in users
@@ -27,7 +27,7 @@ block content
           if !t.done
             form.w3-container(method="post" action="/editTask/"+t.id)
               fieldset.w3-light-grey
-                legend Task
+                legend.w3-large Task
                 label Id
                 input.w3-input.w3-round.w3-grey(type="text" name="id" value=t.id readonly)
                 label User

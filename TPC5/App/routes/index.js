@@ -24,8 +24,6 @@ router.get('/', function(req, res, next) {
 router.post('/', function(req, res, next) {
   var data = new Date().toISOString().substring(0, 16)
   let req_task = req.body
-  /* Talvez acrescentar id automático.*/
-
   Task.addTask(req_task)
     .then(() => {
       res.redirect("/")
