@@ -1,0 +1,60 @@
+extends layout
+
+block content
+  header.w3-container.w3-deep-purple
+    h1 Gestor de tarefas
+  //- Formulário para novas tarefas
+  div.w3-container
+    div.w3-cell-row
+      div.w3-cell(style="width:50%")
+        form.w3-container(method="post")
+          fieldset.w3-light-grey
+            legend.w3-xlarge Adicionar nova tarefa
+            label Id
+            input.w3-input.w3-round.w3-grey(type="text" name="id")
+            label User
+            select.w3-select.w3-round.w3-grey(name="user")
+              each u in users
+                option(value=u.id) #{u.nome}
+            label Task
+            input.w3-input.w3-round.w3-grey(type="text" name="task")
+          button.w3-btn.w3-round.w3-deep-purple(type="submit") Registar tarefa
+    br
+    //- Formulários para tarefas toDO e done.
+    div.w3-cell-row
+      div.w3-cell(style="width:45%")
+        each t in tasks
+          if !t.done
+            form.w3-container(method="post" action="/editTask/"+t.id)
+              fieldset.w3-light-grey
+                legend Task
+                label Id
+                input.w3-input.w3-round.w3-grey(type="text" name="id" value=t.id readonly)
+                label User
+                select.w3-select.w3-round.w3-grey(name="user" selected=t.user)
+                  each u in users
+                    if t.user==u.id 
+                      option(value=u.id selected) #{u.nome}
+                    else 
+                      option(value=u.id)=u.nome
+                label Task
+                input.w3-input.w3-round.w3-grey(type="text" name="task" value=t.task)
+                label Done 
+                input.w3-check.w3-round.w3-grey(type="checkbox" name="done" value=1 onChange="this.form.submit()")
+              button.w3-btn.w3-round.w3-deep-purple(type="submit") Submit
+              input.w3-btn.w3-round.w3-deep-purple(type="reset")
+            br
+      div.w3-cell(style="width:5%")
+      div.w3-cell(style="width:45%")
+        table.w3-table.w3-striped.w3-bordered.w3-centered
+          caption.w3-large.w3-indigo Done tasks
+          tr.w3-deep-purple
+            th Id
+            th User
+            th Task
+            each t in tasks
+              if t.done
+                tr
+                  td #{t.id}
+                  td #{t.user}
+                  td #{t.task}
