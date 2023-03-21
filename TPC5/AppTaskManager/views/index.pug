@@ -18,6 +18,8 @@ block content
                 option(value=u.id) #{u.nome}
             label Task
             input.w3-input.w3-round.w3-grey(type="text" name="task")
+            label Due to
+            input.w3-input.w3-round.w3-grey(type="date" name="dueTo")
           button.w3-btn.w3-round.w3-deep-purple(type="submit") Registar tarefa
     br
     //- Formulários para tarefas toDO e done.
@@ -39,6 +41,8 @@ block content
                       option(value=u.id)=u.nome
                 label Task
                 input.w3-input.w3-round.w3-grey(type="text" name="task" value=t.task)
+                label Due To
+                input.w3-input.w3-round.w3-grey(type="date" name="dueTo" value=t.dueTo)
                 label Done 
                 input.w3-check.w3-round.w3-grey(type="checkbox" name="done" value=1 onChange="this.form.submit()")
               button.w3-btn.w3-round.w3-deep-purple(type="submit") Submit
