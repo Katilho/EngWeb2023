@@ -19,7 +19,10 @@ block content
             label Task
             input.w3-input.w3-round.w3-grey(type="text" name="task")
             label Due to
-            input.w3-input.w3-round.w3-grey(type="date" name="dueTo")
+            input.w3-input.w3-round.w3-grey(type="date" id="date" name="dueTo")
+            script.
+              var today = new Date().toISOString().split('T')[0];
+              document.getElementById("date").setAttribute("min", today);
           button.w3-btn.w3-round.w3-deep-purple(type="submit") Registar tarefa
     br
     //- Formulários para tarefas toDO e done.
